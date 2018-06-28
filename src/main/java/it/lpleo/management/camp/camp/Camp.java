@@ -4,8 +4,9 @@ import lombok.Data;
 
 @Data
 public class Camp {
-    private Long id;
-    private String name;
-    private Long year;
-    private boolean active;
+
+  private Long id;
+  private String name;
+  private Long year;
+  private boolean active;
 }

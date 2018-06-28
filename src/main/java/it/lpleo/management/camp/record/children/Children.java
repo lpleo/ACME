@@ -8,7 +8,8 @@ import java.util.List;
 
 @Data
 public class Children extends Record {
-    private List<Allergy> allergies;
-    private Date birthDate;
-    private List<Registration> registrations;
+
+  private List<Allergy> allergies;
+  private Date birthDate;
+  private List<Registration> registrations;
 }

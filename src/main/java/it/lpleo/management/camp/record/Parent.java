@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class Parent extends Record {
-    private Long id;
-    private String email;
-    private String telephoneNumber;
+
+  private Long id;
+  private String email;
+  private String telephoneNumber;
 }

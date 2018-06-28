@@ -12,26 +12,26 @@ import java.util.List;
 @RequestMapping("/camp")
 public class CampController {
 
-    @PostMapping
-    public void insertNewCamp(@RequestBody Camp camp) {
+  @PostMapping
+  public void insertNewCamp(@RequestBody Camp camp) {
 
-    }
+  }
 
-    @GetMapping
-    public List<Camp> getAllCamps() {
-        log.info("get all camps");
-        return new ArrayList<>();
-    }
+  @GetMapping
+  public List<Camp> getAllCamps() {
+    log.info("get all camps");
+    return new ArrayList<>();
+  }
 
-    @GetMapping("/{campId}")
-    public Camp getCamp(@PathVariable String campId) {
-        log.info("get camp");
-        return new Camp();
-    }
+  @GetMapping("/{campId}")
+  public Camp getCamp(@PathVariable String campId) {
+    log.info("get camp");
+    return new Camp();
+  }
 
-    @DeleteMapping("/{campId}")
-    public void deleteCamp(@PathVariable String campId){
+  @DeleteMapping("/{campId}")
+  public void deleteCamp(@PathVariable String campId) {
 
-    }
+  }
 
 }

@@ -4,8 +4,9 @@ import lombok.Data;
 
 @Data
 public class Record {
-    private Long id;
-    private String name;
-    private String surname;
-    private String fiscalCode;
+
+  private Long id;
+  private String name;
+  private String surname;
+  private String fiscalCode;
 }
