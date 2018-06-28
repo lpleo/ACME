@@ -22,7 +22,7 @@ public class CampController {
 
   @PostMapping
   public void insertNewCamp(@RequestBody Camp camp) {
-
+    campService.insertNewCamp(camp);
   }
 
   @GetMapping

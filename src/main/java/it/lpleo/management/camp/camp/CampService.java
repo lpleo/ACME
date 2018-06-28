@@ -12,6 +12,10 @@ public class CampService {
   private CampRepository campRepository;
 
   public List<Camp> getAllCamps() {
-    return campRepository.retrieveAllCamps();
+    return campRepository.getAllCamps();
+  }
+
+  public void insertNewCamp(Camp camp) {
+    campRepository.insertNewCamp(camp);
   }
 }

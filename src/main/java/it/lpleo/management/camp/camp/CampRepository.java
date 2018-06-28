@@ -12,18 +12,18 @@ public class CampRepository {
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
+  @Autowired
+  private CampRepositoryRowMapper campRepositoryRowMapper;
+
   private static final String SELECT_ALL_CAMPS = "SELECT * FROM CAMP";
+  private static final String INSERT_NEW_CAMP = "INSERT INTO CAMP(name,`year`,active) VALUES (?,?,?)";
 
 
-  public List<Camp> retrieveAllCamps() {
-    return jdbcTemplate.query(SELECT_ALL_CAMPS, new Object[]{}, (rs, rowNum) -> {
-          Camp c = new Camp();
-          c.setId(rs.getLong("id"));
-          c.setYear(rs.getLong("year"));
-          c.setName(rs.getString("name"));
-          c.setActive(rs.getBoolean("active"));
-          return c;
-        }
-    );
+  public List<Camp> getAllCamps() {
+    return jdbcTemplate.query(SELECT_ALL_CAMPS, new Object[]{}, campRepositoryRowMapper);
+  }
+
+  public void insertNewCamp(Camp newCamp) {
+    jdbcTemplate.update(INSERT_NEW_CAMP, newCamp.getName(), newCamp.getYear(), newCamp.isActive());
   }
 }

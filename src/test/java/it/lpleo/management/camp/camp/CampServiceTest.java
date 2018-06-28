@@ -1,12 +1,17 @@
 package it.lpleo.management.camp.camp;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -21,9 +26,9 @@ public class CampServiceTest {
   private CampService campService;
 
   @Test
-  public void getAllCamps() {
+  public void getAllCampsTest() throws SQLException {
 
-    when(campRepository.retrieveAllCamps()).thenReturn(createCampList());
+    when(campRepository.getAllCamps()).thenReturn(createCampList());
 
     List<Camp> camps = campService.getAllCamps();
 
@@ -32,6 +37,20 @@ public class CampServiceTest {
     Assert.assertEquals(new Long(1), camps.get(0).getYear());
     Assert.assertFalse(camps.get(0).isActive());
     Assert.assertEquals(new Long(2), camps.get(0).getId());
+  }
+
+  @Test
+  public void insertNewCampTest() {
+    campService.insertNewCamp(createCamp());
+
+    ArgumentCaptor<Camp> captor = ArgumentCaptor.forClass(Camp.class);
+
+    verify(campRepository).insertNewCamp(captor.capture());
+
+    Assert.assertEquals("name", captor.getValue().getName());
+    Assert.assertEquals(new Long(1), captor.getValue().getYear());
+    Assert.assertFalse(captor.getValue().isActive());
+    Assert.assertEquals(new Long(2), captor.getValue().getId());
   }
 
   private List<Camp> createCampList() {
