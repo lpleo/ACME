@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS ALLERGY;
+DROP TABLE IF EXISTS SUBSCRIPTION;
+DROP TABLE IF EXISTS CHILDREN;
+DROP TABLE IF EXISTS PARENT;
+DROP TABLE IF EXISTS CAMP;
+
 CREATE TABLE CAMP (
     id int,
     name varchar(255),
@@ -14,7 +20,7 @@ CREATE TABLE PARENT (
     email varchar(255),
     telephoneNumber varchar(255),
     PRIMARY KEY(id)
-)
+);
 
 
 CREATE TABLE CHILDREN (
@@ -27,7 +33,7 @@ CREATE TABLE CHILDREN (
     weekNumber int,
     PRIMARY KEY(id),
     FOREIGN KEY(parentId) REFERENCES PARENT(id)
-)
+);
 
 CREATE TABLE SUBSCRIPTION (
     id int,
@@ -40,7 +46,7 @@ CREATE TABLE SUBSCRIPTION (
     PRIMARY KEY(id),
     FOREIGN KEY(campId) REFERENCES CAMP(id),
     FOREIGN KEY(childrenId) REFERENCES CHILDREN(id)
-)
+);
 
 CREATE TABLE ALLERGY(
     id int,
@@ -50,5 +56,5 @@ CREATE TABLE ALLERGY(
     type varchar(255),
     PRIMARY KEY(id),
     FOREIGN KEY(childrenId) REFERENCES CHILDREN(id)
-)
+);
 
