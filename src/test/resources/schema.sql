@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS PARENT;
 DROP TABLE IF EXISTS CAMP;
 
 CREATE TABLE CAMP (
-    id int,
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
     name varchar(255),
     year int,
     active int,
@@ -13,7 +13,7 @@ CREATE TABLE CAMP (
 );
 
 CREATE TABLE PARENT (
-    id int,
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
     fiscalCode varchar(255),
     name varchar(255),
     surname varchar(255),
@@ -24,8 +24,8 @@ CREATE TABLE PARENT (
 
 
 CREATE TABLE CHILDREN (
-    id int,
-    parentId int,
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    parentId MEDIUMINT NOT NULL,
     fiscalCode varchar(255),
     name varchar(255),
     surname varchar(255),
@@ -36,9 +36,9 @@ CREATE TABLE CHILDREN (
 );
 
 CREATE TABLE SUBSCRIPTION (
-    id int,
-    campId int,
-    childrenId int,
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    campId MEDIUMINT NOT NULL,
+    childrenId MEDIUMINT NOT NULL,
     month int,
     firstDay int,
     lastDay int,
@@ -49,8 +49,8 @@ CREATE TABLE SUBSCRIPTION (
 );
 
 CREATE TABLE ALLERGY(
-    id int,
-    childrenId int,
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    childrenId MEDIUMINT NOT NULL,
     name varchar(255),
     description varchar(255),
     type varchar(255),

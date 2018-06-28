@@ -1,0 +1,1 @@
+INSERT INTO CAMP(name,`year`,active) VALUES ('TESTCAMPACTIVE',2008,1);
