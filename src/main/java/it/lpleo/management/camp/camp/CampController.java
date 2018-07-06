@@ -32,9 +32,9 @@ public class CampController {
   }
 
   @GetMapping("/{campId}")
-  public Camp getCamp(@PathVariable String campId) {
+  public Camp getCamp(@PathVariable Long campId) {
     log.info("get camp");
-    return new Camp();
+    return campService.getCamp(campId);
   }
 
   @DeleteMapping("/{campId}")

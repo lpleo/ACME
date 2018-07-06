@@ -18,4 +18,8 @@ public class CampService {
   public void insertNewCamp(Camp camp) {
     campRepository.insertNewCamp(camp);
   }
+
+  public Camp getCamp(Long campId) {
+    return campRepository.getCamp(campId);
+  }
 }

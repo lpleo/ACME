@@ -16,14 +16,20 @@ public class CampRepository {
   private CampRepositoryRowMapper campRepositoryRowMapper;
 
   private static final String SELECT_ALL_CAMPS = "SELECT * FROM CAMP";
+  private static final String SELECT_SINGLE_CAMP = "SELECT * FROM CAMP WHERE id = ?";
   private static final String INSERT_NEW_CAMP = "INSERT INTO CAMP(name,`year`,active) VALUES (?,?,?)";
 
 
   public List<Camp> getAllCamps() {
-    return jdbcTemplate.query(SELECT_ALL_CAMPS, new Object[]{}, campRepositoryRowMapper);
+    return jdbcTemplate.query(SELECT_ALL_CAMPS, campRepositoryRowMapper);
   }
 
   public void insertNewCamp(Camp newCamp) {
     jdbcTemplate.update(INSERT_NEW_CAMP, newCamp.getName(), newCamp.getYear(), newCamp.isActive());
+  }
+
+  public Camp getCamp(Long campId) {
+    return jdbcTemplate
+               .queryForObject(SELECT_SINGLE_CAMP, new Object[]{campId}, campRepositoryRowMapper);
   }
 }
