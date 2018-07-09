@@ -3,8 +3,7 @@ package it.lpleo.management.camp.record;
 import lombok.Data;
 
 @Data
-public class Record {
-
+public class Person {
   private Long id;
   private String name;
   private String surname;

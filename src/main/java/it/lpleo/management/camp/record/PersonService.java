@@ -1,0 +1,28 @@
+package it.lpleo.management.camp.record;
+
+import it.lpleo.management.camp.record.child.Allergy;
+import it.lpleo.management.camp.record.child.Child;
+import it.lpleo.management.camp.record.parent.Parent;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class PersonService {
+
+  @Autowired
+  PersonRepository personRepository;
+
+  public Child getChild(Long childId) {
+    return personRepository.getChild(childId);
+  }
+
+  public Parent getParent(Long parentId) {
+    return personRepository.getParent(parentId);
+  }
+
+  public List<Allergy> getAllergiesByChildId(Long childId) {
+    return personRepository.getAllergiesByChildId(childId);
+  }
+
+}

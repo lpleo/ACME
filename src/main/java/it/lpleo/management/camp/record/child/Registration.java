@@ -1,8 +1,7 @@
-package it.lpleo.management.camp.record.children;
-
-import lombok.Data;
+package it.lpleo.management.camp.record.child;
 
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class Registration {

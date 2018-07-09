@@ -1,4 +1,4 @@
-package it.lpleo.management.camp.record.children;
+package it.lpleo.management.camp.record.child;
 
 import lombok.Data;
 
