@@ -1,7 +1,5 @@
 package it.lpleo.management.camp.camp;
 
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
 import java.sql.ResultSet;
@@ -10,11 +8,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class CampRepositoryRowMapperTest {
+public class CampRowMapperTest {
 
   @Test
   public void parseCampFromJdbcResultSet() throws SQLException {
-    CampRepositoryRowMapper campRepositoryParser = new CampRepositoryRowMapper();
+    CampRowMapper campRepositoryParser = new CampRowMapper();
     Camp camp = campRepositoryParser.mapRow(createResulSet(), 5);
 
     Assert.assertEquals("PIPPO", camp.getName());

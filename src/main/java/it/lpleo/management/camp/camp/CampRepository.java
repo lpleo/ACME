@@ -13,7 +13,7 @@ public class CampRepository {
   private JdbcTemplate jdbcTemplate;
 
   @Autowired
-  private CampRepositoryRowMapper campRepositoryRowMapper;
+  private CampRowMapper campRowMapper;
 
   private static final String SELECT_ALL_CAMPS = "SELECT * FROM CAMP";
   private static final String SELECT_SINGLE_CAMP = "SELECT * FROM CAMP WHERE id = ?";
@@ -21,7 +21,7 @@ public class CampRepository {
 
 
   public List<Camp> getAllCamps() {
-    return jdbcTemplate.query(SELECT_ALL_CAMPS, campRepositoryRowMapper);
+    return jdbcTemplate.query(SELECT_ALL_CAMPS, campRowMapper);
   }
 
   public void insertNewCamp(Camp newCamp) {
@@ -30,6 +30,6 @@ public class CampRepository {
 
   public Camp getCamp(Long campId) {
     return jdbcTemplate
-               .queryForObject(SELECT_SINGLE_CAMP, new Object[]{campId}, campRepositoryRowMapper);
+        .queryForObject(SELECT_SINGLE_CAMP, new Object[]{campId}, campRowMapper);
   }
 }

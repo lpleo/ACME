@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CampRepositoryRowMapper implements RowMapper<Camp> {
+public class CampRowMapper implements RowMapper<Camp> {
 
   @Override
   public Camp mapRow(ResultSet resultSet, int i) throws SQLException {

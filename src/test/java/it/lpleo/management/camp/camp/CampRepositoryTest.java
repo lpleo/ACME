@@ -25,7 +25,7 @@ public class CampRepositoryTest {
   private JdbcTemplate jdbcTemplate;
 
   @Mock
-  private CampRepositoryRowMapper campRepositoryRowMapper;
+  private CampRowMapper campRowMapper;
 
   @InjectMocks
   private CampRepository campRepository;
@@ -33,7 +33,7 @@ public class CampRepositoryTest {
   @Test
   public void retrieveAllCamps() throws SQLException {
 
-    when(jdbcTemplate.query(anyString(), any(Object[].class), Mockito.eq(campRepositoryRowMapper)))
+    when(jdbcTemplate.query(anyString(), any(Object[].class), Mockito.eq(campRowMapper)))
         .thenReturn(createCampList());
 
     List<Camp> camps = campRepository.getAllCamps();
