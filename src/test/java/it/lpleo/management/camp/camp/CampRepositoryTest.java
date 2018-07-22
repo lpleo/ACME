@@ -1,5 +1,6 @@
 package it.lpleo.management.camp.camp;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -38,25 +39,25 @@ public class CampRepositoryTest {
 
     List<Camp> camps = campRepository.getAllCamps();
 
-    Assert.assertEquals(1, camps.size());
-    Assert.assertEquals("name", camps.get(0).getName());
-    Assert.assertEquals(new Long(1), camps.get(0).getYear());
+    assertEquals(1, camps.size());
+    assertEquals("name", camps.get(0).getName());
+    assertEquals(new Long(1), camps.get(0).getYear());
     Assert.assertFalse(camps.get(0).isActive());
-    Assert.assertEquals(new Long(2), camps.get(0).getId());
+    assertEquals(new Long(2), camps.get(0).getId());
   }
 
   @Test
   public void insertNewCamp() {
 
-    campRepository.insertNewCamp(createCamp());
+    campRepository.insertCamp(createCamp());
 
     ArgumentCaptor<Object[]> captor = ArgumentCaptor.forClass(Object[].class);
 
     verify(jdbcTemplate).update(anyString(), captor.capture());
 
-    Assert.assertEquals("name", captor.getAllValues().get(0));
-    Assert.assertEquals(1L, captor.getAllValues().get(1));
-    Assert.assertEquals(false, captor.getAllValues().get(2));
+    assertEquals("name", captor.getAllValues().get(0));
+    assertEquals(1L, captor.getAllValues().get(1));
+    assertEquals(false, captor.getAllValues().get(2));
   }
 
   private List<Camp> createCampList() {

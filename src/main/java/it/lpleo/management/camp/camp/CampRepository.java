@@ -17,15 +17,15 @@ public class CampRepository {
 
   private static final String SELECT_ALL_CAMPS = "SELECT * FROM CAMP";
   private static final String SELECT_SINGLE_CAMP = "SELECT * FROM CAMP WHERE id = ?";
-  private static final String INSERT_NEW_CAMP = "INSERT INTO CAMP(name,`year`,active) VALUES (?,?,?)";
+  private static final String INSERT_CAMP = "INSERT INTO CAMP(name,`year`,active) VALUES (?,?,?)";
 
 
   public List<Camp> getAllCamps() {
     return jdbcTemplate.query(SELECT_ALL_CAMPS, campRowMapper);
   }
 
-  public void insertNewCamp(Camp newCamp) {
-    jdbcTemplate.update(INSERT_NEW_CAMP, newCamp.getName(), newCamp.getYear(), newCamp.isActive());
+  public void insertCamp(Camp newCamp) {
+    jdbcTemplate.update(INSERT_CAMP, newCamp.getName(), newCamp.getYear(), newCamp.isActive());
   }
 
   public Camp getCamp(Long campId) {

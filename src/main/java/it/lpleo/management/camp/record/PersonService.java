@@ -17,6 +17,10 @@ public class PersonService {
     return personRepository.getChild(childId);
   }
 
+  public void insertChild(Child child) {
+    personRepository.insertChild(child);
+  }
+
   public Parent getParent(Long parentId) {
     return personRepository.getParent(parentId);
   }
@@ -24,5 +28,4 @@ public class PersonService {
   public List<Allergy> getAllergiesByChildId(Long childId) {
     return personRepository.getAllergiesByChildId(childId);
   }
-
 }

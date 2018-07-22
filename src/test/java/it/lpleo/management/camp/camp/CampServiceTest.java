@@ -1,10 +1,8 @@
 package it.lpleo.management.camp.camp;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +39,11 @@ public class CampServiceTest {
 
   @Test
   public void insertNewCampTest() {
-    campService.insertNewCamp(createCamp());
+    campService.insertCamp(createCamp());
 
     ArgumentCaptor<Camp> captor = ArgumentCaptor.forClass(Camp.class);
 
-    verify(campRepository).insertNewCamp(captor.capture());
+    verify(campRepository).insertCamp(captor.capture());
 
     Assert.assertEquals("name", captor.getValue().getName());
     Assert.assertEquals(new Long(1), captor.getValue().getYear());

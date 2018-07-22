@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 public class PersonRepository {
 
   private static final String SELECT_SINGLE_CHILD = "SELECT * FROM CHILD WHERE id = ?";
+  private static final String INSERT_CHILD = "INSERT INTO CHILD(fiscalCode, name, surname, birthDate) values (?,?,?,?)";
   private static final String SELECT_SINGLE_PARENT = "SELECT * FROM PARENT WHERE id = ?";
   private static final String SELECT_PARENT_IDS_FROM_CHILD_ID = "SELECT parentId FROM PARENT_CHILD WHERE childId = ?";
   private static final String SELECT_ALLERGIES_BY_CHILD_ID = "SELECT * FROM ALLERGY WHERE childId = ?";
@@ -34,6 +35,11 @@ public class PersonRepository {
   public Child getChild(Long childId) {
     return jdbcTemplate
         .queryForObject(SELECT_SINGLE_CHILD, new Object[]{childId}, childRowMapper);
+  }
+
+  public void insertChild(Child child) {
+    jdbcTemplate.update(INSERT_CHILD, child.getFiscalCode(), child.getName(), child.getSurname(),
+        child.getBirthDate());
   }
 
   public List<Long> getParentIdsFromChild(Long childId) {

@@ -2,10 +2,6 @@ package it.lpleo.management.camp.record.child;
 
 import lombok.Data;
 
-enum Type {
-  FOOD, OTHER
-}
-
 @Data
 public class Allergy {
 

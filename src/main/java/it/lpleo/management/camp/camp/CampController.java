@@ -21,8 +21,8 @@ public class CampController {
   private CampService campService;
 
   @PostMapping
-  public void insertNewCamp(@RequestBody Camp camp) {
-    campService.insertNewCamp(camp);
+  public void insertCamp(@RequestBody Camp camp) {
+    campService.insertCamp(camp);
   }
 
   @GetMapping
