@@ -1,4 +1,5 @@
 INSERT INTO CAMP(name,`year`,active) VALUES ('TESTCAMPACTIVE',2008,1);
+INSERT INTO CAMP(name,`year`,active) VALUES ('TESTCAMP_NO_ACTIVE',2005,0);
 
 INSERT INTO CHILD(fiscalCode, name, surname, birthDate)
 VALUES ('AAABBB55G50W548A','CIAO','PIPPO', NOW());
