@@ -8,10 +8,19 @@ import static org.mockito.Mockito.when;
 import it.lpleo.management.camp.record.child.Child;
 import it.lpleo.management.camp.record.child.ChildRowMapper;
 import it.lpleo.management.camp.record.parent.ParentRowMapper;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.support.ChildBeanDefinition;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+@RunWith(MockitoJUnitRunner.class)
 public class PersonRepositoryTest {
 
   @Mock
@@ -23,17 +32,21 @@ public class PersonRepositoryTest {
   @Mock
   private ParentRowMapper parentRowMapper;
 
+  @InjectMocks
+  private PersonRepository personRepository;
+
   @Test
-  public void getChild() {
+  public void getChild() throws ParseException {
     when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), eq(childRowMapper)))
         .thenReturn(createChild());
 
-    //TODO continue from here
+    Child child = personRepository.getChild(11L);
 
-  }
-
-  private Child createChild() {
-    return null;
+    Assert.assertEquals(simpleDateFormat().parse("11/11/2011"),child.getBirthDate());
+    Assert.assertEquals("ABC123",child.getFiscalCode());
+    Assert.assertEquals(new Long(11),child.getId());
+    Assert.assertEquals("NAME",child.getName());
+    Assert.assertEquals("SURNAME",child.getSurname());
   }
 
   @Test
@@ -50,6 +63,21 @@ public class PersonRepositoryTest {
 
   @Test
   public void getAllergiesByChildId() {
+  }
+
+  private Child createChild() throws ParseException {
+    Child child = new Child();
+    Date date = simpleDateFormat().parse("11/11/2011");
+    child.setBirthDate(date);
+    child.setFiscalCode("ABC123");
+    child.setId(11L);
+    child.setName("NAME");
+    child.setSurname("SURNAME");
+    return child;
+  }
+
+  private SimpleDateFormat simpleDateFormat() {
+    return new SimpleDateFormat("dd/MM/yyyy");
   }
 
 
