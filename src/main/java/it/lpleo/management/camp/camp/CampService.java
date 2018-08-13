@@ -22,4 +22,8 @@ public class CampService {
   public Camp getCamp(Long campId) {
     return campRepository.getCamp(campId);
   }
+
+  public Camp getActiveCamp() {
+    return campRepository.getActiveCamp();
+  }
 }

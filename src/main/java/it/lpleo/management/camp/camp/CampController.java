@@ -33,8 +33,14 @@ public class CampController {
 
   @GetMapping("/{campId}")
   public Camp getCamp(@PathVariable Long campId) {
-    log.info("get camp");
+    log.info("get camp with id [" + campId + "]");
     return campService.getCamp(campId);
+  }
+
+  @GetMapping("/active")
+  public Camp getActiveCamp() {
+    log.info("get active camp");
+    return campService.getActiveCamp();
   }
 
   @DeleteMapping("/{campId}")

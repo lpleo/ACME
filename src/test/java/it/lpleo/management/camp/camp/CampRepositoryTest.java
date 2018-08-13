@@ -34,7 +34,7 @@ public class CampRepositoryTest {
   @Test
   public void retrieveAllCamps() throws SQLException {
 
-    when(jdbcTemplate.query(anyString(), any(Object[].class), Mockito.eq(campRowMapper)))
+    when(jdbcTemplate.query(anyString(), Mockito.eq(campRowMapper)))
         .thenReturn(createCampList());
 
     List<Camp> camps = campRepository.getAllCamps();
@@ -58,6 +58,46 @@ public class CampRepositoryTest {
     assertEquals("name", captor.getAllValues().get(0));
     assertEquals(1L, captor.getAllValues().get(1));
     assertEquals(false, captor.getAllValues().get(2));
+  }
+
+  @Test
+  public void getCamp() {
+
+    Camp testCamp = createCamp();
+    testCamp.setId(101L);
+
+    when(jdbcTemplate
+        .queryForObject(anyString(), Mockito.eq(new Object[]{101L}), Mockito.eq(campRowMapper)))
+        .thenReturn(testCamp);
+
+    Camp camp = campRepository.getCamp(101L);
+
+    Assert.assertEquals("name", camp.getName());
+    Assert.assertEquals(new Long(1), camp.getYear());
+    Assert.assertFalse(camp.isActive());
+    Assert.assertEquals(new Long(101), camp.getId());
+
+    campRepository.getCamp(1L);
+  }
+
+  @Test
+  public void getActiveCamp() {
+
+    Camp testCamp = createCamp();
+    testCamp.setActive(true);
+
+    when(jdbcTemplate
+        .queryForObject(anyString(), Mockito.eq(campRowMapper)))
+        .thenReturn(testCamp);
+
+    Camp camp = campRepository.getActiveCamp();
+
+    Assert.assertEquals("name", camp.getName());
+    Assert.assertEquals(new Long(1), camp.getYear());
+    Assert.assertTrue(camp.isActive());
+    Assert.assertEquals(new Long(2), camp.getId());
+
+    campRepository.getCamp(1L);
   }
 
   private List<Camp> createCampList() {

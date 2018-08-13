@@ -51,6 +51,34 @@ public class CampServiceTest {
     Assert.assertEquals(new Long(2), captor.getValue().getId());
   }
 
+  @Test
+  public void getCampTest() {
+    when(campRepository.getCamp(2L)).thenReturn(createCamp());
+
+    Camp camp = campService.getCamp(2L);
+
+    Assert.assertEquals("name", camp.getName());
+    Assert.assertEquals(new Long(1), camp.getYear());
+    Assert.assertFalse(camp.isActive());
+    Assert.assertEquals(new Long(2), camp.getId());
+  }
+
+  @Test
+  public void getActiveCampTest() {
+    Camp testCamp = createCamp();
+    testCamp.setActive(true);
+    when(campRepository.getActiveCamp()).thenReturn(testCamp);
+
+    Camp camp = campService.getActiveCamp();
+
+    Assert.assertEquals("name", camp.getName());
+    Assert.assertEquals(new Long(1), camp.getYear());
+    Assert.assertTrue(camp.isActive());
+    Assert.assertEquals(new Long(2), camp.getId());
+  }
+
+
+
   private List<Camp> createCampList() {
     ArrayList<Camp> camps = new ArrayList<>();
     camps.add(createCamp());

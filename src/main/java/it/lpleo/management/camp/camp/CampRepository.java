@@ -17,6 +17,7 @@ public class CampRepository {
 
   private static final String SELECT_ALL_CAMPS = "SELECT * FROM CAMP";
   private static final String SELECT_SINGLE_CAMP = "SELECT * FROM CAMP WHERE id = ?";
+  private static final String SELECT_ACTIVE_CAMP = "SELECT * FROM CAMP WHERE active = 1";
   private static final String INSERT_CAMP = "INSERT INTO CAMP(name,`year`,active) VALUES (?,?,?)";
 
 
@@ -31,5 +32,9 @@ public class CampRepository {
   public Camp getCamp(Long campId) {
     return jdbcTemplate
         .queryForObject(SELECT_SINGLE_CAMP, new Object[]{campId}, campRowMapper);
+  }
+
+  public Camp getActiveCamp() {
+    return jdbcTemplate.queryForObject(SELECT_ACTIVE_CAMP, campRowMapper);
   }
 }
