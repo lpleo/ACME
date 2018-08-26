@@ -21,6 +21,11 @@ public class PersonController {
   @Autowired
   PersonService personService;
 
+  @GetMapping("/children")
+  public List<Child> getChildren(@PathVariable(required = false) Long campYear) {
+    return personService.getChildren(campYear);
+  }
+
   @GetMapping("/child/{childId}")
   public Child getChild(@PathVariable Long childId) {
     return personService.getChild(childId);

@@ -28,4 +28,8 @@ public class PersonService {
   public List<Allergy> getAllergiesByChildId(Long childId) {
     return personRepository.getAllergiesByChildId(childId);
   }
+
+  public List<Child> getChildren(Long campYear) {
+    return personRepository.getChildren(campYear);
+  }
 }
