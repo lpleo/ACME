@@ -49,7 +49,7 @@ public class PersonRepository {
     parameters.addValue("fiscalCode", child.getFiscalCode());
     parameters.addValue("name", child.getName());
     parameters.addValue("surname", child.getSurname());
-    parameters.addValue("birthDate", child.getSurname());
+    parameters.addValue("birthDate", child.getBirthDate());
     jdbcTemplate.update(INSERT_CHILD, parameters);
   }
 
