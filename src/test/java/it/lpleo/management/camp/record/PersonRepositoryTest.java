@@ -66,6 +66,12 @@ public class PersonRepositoryTest {
 
   @Test
   public void getAllergiesByChildId() {
+    //TODO
+  }
+
+  @Test
+  public void getChildren() {
+    //TODO
   }
 
   private Child createChild() throws ParseException {
