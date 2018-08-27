@@ -23,26 +23,31 @@ public class PersonController {
 
   @GetMapping("/children")
   public List<Child> getChildren(@PathVariable(required = false) Long campYear) {
+    log.info("get filtered children");
     return personService.getChildren(campYear);
   }
 
   @GetMapping("/child/{childId}")
   public Child getChild(@PathVariable Long childId) {
+    log.info("get child with id [" + childId + "]");
     return personService.getChild(childId);
   }
 
   @PostMapping("/child")
   public void insertChild(@RequestBody Child child) {
+    log.info("insert child");
     personService.insertChild(child);
   }
 
   @GetMapping("/parent/{parentId}")
   public Child getParent(@PathVariable Long parentId) {
+    log.info("get parent with id [" + parentId + "]");
     return personService.getChild(parentId);
   }
 
   @GetMapping("/child/{childId}/allergy")
   public List<Allergy> getChildAllergies(@PathVariable Long childId) {
+    log.info("get allergies for id [" + childId + "]");
     return personService.getAllergiesByChildId(childId);
   }
 }
