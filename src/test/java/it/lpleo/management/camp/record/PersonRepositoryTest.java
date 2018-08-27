@@ -17,14 +17,14 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.support.ChildBeanDefinition;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PersonRepositoryTest {
 
   @Mock
-  private JdbcTemplate jdbcTemplate;
+  private NamedParameterJdbcTemplate jdbcTemplate;
 
   @Mock
   private ChildRowMapper childRowMapper;
@@ -37,7 +37,7 @@ public class PersonRepositoryTest {
 
   @Test
   public void getChild() throws ParseException {
-    when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), eq(childRowMapper)))
+    when(jdbcTemplate.queryForObject(anyString(), any(MapSqlParameterSource.class), eq(childRowMapper)))
         .thenReturn(createChild());
 
     Child child = personRepository.getChild(11L);
@@ -51,14 +51,17 @@ public class PersonRepositoryTest {
 
   @Test
   public void insertChild() {
+    //TODO
   }
 
   @Test
   public void getParentIdsFromChild() {
+    //TODO
   }
 
   @Test
   public void getParent() {
+    //TODO
   }
 
   @Test
