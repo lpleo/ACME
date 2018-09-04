@@ -11,8 +11,10 @@ import it.lpleo.management.camp.record.parent.Parent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -36,6 +38,27 @@ public class PersonServiceTest {
     when(personRepository.getChild(id)).thenReturn(createChild(id));
 
     Child child = personService.getChild(id);
+
+    assertEquals(createDate("10", "10", "2010"), child.getBirthDate());
+    assertEquals(123L, (long) child.getId());
+    assertEquals("PIPPO", child.getName());
+    assertEquals("PLUTO", child.getSurname());
+    assertEquals("CCCAAABBB", child.getFiscalCode());
+  }
+
+  @Test
+  public void getChildren() throws ParseException {
+
+    Long campYear = 2010L;
+
+    when(personRepository.getChildren(campYear))
+        .thenReturn(Arrays.asList(new Child(), createChild(123L)));
+
+    List<Child> children = personService.getChildren(campYear);
+
+    Assert.assertEquals(2, children.size());
+
+    Child child = children.get(1);
 
     assertEquals(createDate("10", "10", "2010"), child.getBirthDate());
     assertEquals(123L, (long) child.getId());
