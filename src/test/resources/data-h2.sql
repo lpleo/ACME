@@ -4,6 +4,9 @@ INSERT INTO CAMP(name,`year`,active) VALUES ('TESTCAMP_NO_ACTIVE',2005,0);
 INSERT INTO CHILD(fiscalCode, name, surname, birthDate)
 VALUES ('AAABBB55G50W548A','CIAO','PIPPO', NOW());
 
+INSERT INTO CHILD(fiscalCode, name, surname, birthDate)
+VALUES ('CCCDDD55G50W548A','HELLO','PEPPO', NOW());
+
 INSERT INTO PARENT(fiscalCode, name, surname, email, telephoneNumber)
 VALUES ('AAABBB55G50W548A','LOLLO','LOLLI', 'abc@ciao.it','123456789');
 
