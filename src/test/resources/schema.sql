@@ -19,7 +19,7 @@ CREATE TABLE PARENT (
 
 CREATE TABLE CHILD (
     id MEDIUMINT NOT NULL AUTO_INCREMENT,
-    fiscalCode varchar(255),
+    fiscalCode varchar(255) UNIQUE NOT NULL,
     name varchar(255),
     surname varchar(255),
     birthDate date,
