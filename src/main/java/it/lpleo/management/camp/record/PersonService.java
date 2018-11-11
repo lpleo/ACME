@@ -17,8 +17,12 @@ public class PersonService {
     return personRepository.getChild(childId);
   }
 
-  public void insertChild(Child child) {
-    personRepository.insertChild(child);
+  public Child getChildByFiscalCode(String fiscalCode) {
+    return personRepository.getChildByFiscalCode(fiscalCode);
+  }
+
+  public Child insertChild(Child child) {
+    return personRepository.insertChild(child);
   }
 
   public Parent getParent(Long parentId) {

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -33,10 +34,16 @@ public class PersonController {
     return personService.getChild(childId);
   }
 
+  @GetMapping("/child")
+  public Child getChildByFiscalCode(@RequestParam String fiscalCode) {
+    log.info("get child with fiscalCode [" + fiscalCode + "]");
+    return personService.getChildByFiscalCode(fiscalCode);
+  }
+
   @PostMapping("/child")
-  public void insertChild(@RequestBody Child child) {
+  public Child insertChild(@RequestBody Child child) {
     log.info("insert child");
-    personService.insertChild(child);
+    return personService.insertChild(child);
   }
 
   @GetMapping("/parent/{parentId}")

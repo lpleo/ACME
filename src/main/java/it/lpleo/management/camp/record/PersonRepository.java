@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 public class PersonRepository {
 
   private static final String SELECT_SINGLE_CHILD = "SELECT * FROM CHILD WHERE id = :id";
+  private static final String SELECT_SINGLE_CHILD_BY_FISCALCODE = "SELECT * FROM CHILD WHERE FISCALCODE = :fiscalCode";
   private static final String INSERT_CHILD = "INSERT INTO CHILD(fiscalCode, name, surname, birthDate) values (:fiscalCode,:name,:surname,:birthDate)";
   private static final String SELECT_SINGLE_PARENT = "SELECT * FROM PARENT WHERE id = :id";
   private static final String SELECT_PARENT_IDS_FROM_CHILD_ID = "SELECT parentId FROM PARENT_CHILD WHERE childId = :childId";
@@ -44,13 +45,21 @@ public class PersonRepository {
         .queryForObject(SELECT_SINGLE_CHILD, parameters, childRowMapper);
   }
 
-  public void insertChild(Child child) {
+  public Child getChildByFiscalCode(String fiscalCode) {
+    MapSqlParameterSource parameters = new MapSqlParameterSource();
+    parameters.addValue("fiscalCode", fiscalCode);
+    return jdbcTemplate
+        .queryForObject(SELECT_SINGLE_CHILD_BY_FISCALCODE, parameters, childRowMapper);
+  }
+
+  public Child insertChild(Child child) {
     MapSqlParameterSource parameters = new MapSqlParameterSource();
     parameters.addValue("fiscalCode", child.getFiscalCode());
     parameters.addValue("name", child.getName());
     parameters.addValue("surname", child.getSurname());
     parameters.addValue("birthDate", child.getBirthDate());
     jdbcTemplate.update(INSERT_CHILD, parameters);
+    return getChildByFiscalCode(child.getFiscalCode());
   }
 
   public List<Long> getParentIdsFromChild(Long childId) {
@@ -85,6 +94,5 @@ public class PersonRepository {
 
     return jdbcTemplate.query(completeQuery, parameter, childRowMapper);
   }
-
 
 }
