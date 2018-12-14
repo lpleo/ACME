@@ -2,6 +2,7 @@ package it.lpleo.management.camp.record;
 
 import it.lpleo.management.camp.record.child.Allergy;
 import it.lpleo.management.camp.record.child.Child;
+import it.lpleo.management.camp.record.parent.Parent;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,12 @@ public class PersonController {
   public Child getParent(@PathVariable Long parentId) {
     log.info("get parent with id [" + parentId + "]");
     return personService.getChild(parentId);
+  }
+
+  @GetMapping("/parent")
+  public Parent getParentByFiscalCode(@RequestParam String fiscalCode) {
+    log.info("get parent with fiscal code [" + fiscalCode + "]");
+    return personService.getParentByFiscalCode(fiscalCode);
   }
 
   @GetMapping("/child/{childId}/allergy")

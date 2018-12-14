@@ -19,6 +19,7 @@ public class PersonRepository {
   private static final String SELECT_SINGLE_CHILD_BY_FISCALCODE = "SELECT * FROM CHILD WHERE FISCALCODE = :fiscalCode";
   private static final String INSERT_CHILD = "INSERT INTO CHILD(fiscalCode, name, surname, birthDate) values (:fiscalCode,:name,:surname,:birthDate)";
   private static final String SELECT_SINGLE_PARENT = "SELECT * FROM PARENT WHERE id = :id";
+  private static final String SELECT_SINGLE_PARENT_BY_FISCALCODE = "SELECT * FROM PARENT WHERE FISCALCODE = :fiscalCode";
   private static final String SELECT_PARENT_IDS_FROM_CHILD_ID = "SELECT parentId FROM PARENT_CHILD WHERE childId = :childId";
   private static final String SELECT_ALLERGIES_BY_CHILD_ID = "SELECT * FROM ALLERGY WHERE childId = :childId";
   private static final String SELECT_CHILDREN_WITH_FILTER = "SELECT CH.* FROM CHILD CH "
@@ -73,6 +74,13 @@ public class PersonRepository {
     parameters.addValue("id", parentId);
     return jdbcTemplate
         .queryForObject(SELECT_SINGLE_PARENT, parameters, parentRowMapper);
+  }
+
+  public Parent getParentByFiscalCode(String fiscalCode) {
+    MapSqlParameterSource parameters = new MapSqlParameterSource();
+    parameters.addValue("fiscalCode", fiscalCode);
+    return jdbcTemplate
+        .queryForObject(SELECT_SINGLE_PARENT_BY_FISCALCODE, parameters, parentRowMapper);
   }
 
   public List<Allergy> getAllergiesByChildId(Long childId) {

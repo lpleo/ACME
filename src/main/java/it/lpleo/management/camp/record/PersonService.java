@@ -36,4 +36,8 @@ public class PersonService {
   public List<Child> getChildren(Long campYear) {
     return personRepository.getChildren(campYear);
   }
+
+  public Parent getParentByFiscalCode(String fiscalCode) {
+    return personRepository.getParentByFiscalCode(fiscalCode);
+  }
 }
