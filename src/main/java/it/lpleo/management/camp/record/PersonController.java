@@ -2,6 +2,7 @@ package it.lpleo.management.camp.record;
 
 import it.lpleo.management.camp.record.child.Allergy;
 import it.lpleo.management.camp.record.child.Child;
+import it.lpleo.management.camp.record.child.Subscription;
 import it.lpleo.management.camp.record.parent.Parent;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
@@ -63,5 +64,12 @@ public class PersonController {
   public List<Allergy> getChildAllergies(@PathVariable Long childId) {
     log.info("get allergies for id [" + childId + "]");
     return personService.getAllergiesByChildId(childId);
+  }
+
+  @GetMapping("/child/{childId}/subscription")
+  public List<Subscription> getChildSubscriptions(@PathVariable Long childId,
+      @RequestParam Long campId) {
+    log.info("get subscriptions for child id [" + childId + "] and camp id [" + campId + "]");
+    return personService.getSubscriptions(campId, childId);
   }
 }

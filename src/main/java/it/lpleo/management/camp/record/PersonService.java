@@ -2,6 +2,7 @@ package it.lpleo.management.camp.record;
 
 import it.lpleo.management.camp.record.child.Allergy;
 import it.lpleo.management.camp.record.child.Child;
+import it.lpleo.management.camp.record.child.Subscription;
 import it.lpleo.management.camp.record.parent.Parent;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,10 @@ public class PersonService {
 
   public List<Allergy> getAllergiesByChildId(Long childId) {
     return personRepository.getAllergiesByChildId(childId);
+  }
+
+  public List<Subscription> getSubscriptions(Long campId, Long childId) {
+    return personRepository.getSubscriptions(campId, childId);
   }
 
   public List<Child> getChildren(Long campYear) {

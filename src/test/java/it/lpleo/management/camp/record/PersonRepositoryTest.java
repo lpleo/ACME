@@ -1,5 +1,9 @@
 package it.lpleo.management.camp.record;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.eq;
@@ -10,6 +14,8 @@ import it.lpleo.management.camp.record.child.Allergy;
 import it.lpleo.management.camp.record.child.AllergyRowMapper;
 import it.lpleo.management.camp.record.child.Child;
 import it.lpleo.management.camp.record.child.ChildRowMapper;
+import it.lpleo.management.camp.record.child.Subscription;
+import it.lpleo.management.camp.record.child.SubscriptionRowMapper;
 import it.lpleo.management.camp.record.child.Type;
 import it.lpleo.management.camp.record.parent.Parent;
 import it.lpleo.management.camp.record.parent.ParentRowMapper;
@@ -17,9 +23,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -44,6 +50,9 @@ public class PersonRepositoryTest {
   @Mock
   private AllergyRowMapper allergyRowMapper;
 
+  @Mock
+  private SubscriptionRowMapper subscriptionRowMapper;
+
   @InjectMocks
   private PersonRepository personRepository;
 
@@ -55,11 +64,11 @@ public class PersonRepositoryTest {
 
     Child child = personRepository.getChild(11L);
 
-    Assert.assertEquals(simpleDateFormat().parse("11/11/2011"), child.getBirthDate());
-    Assert.assertEquals("ABC123", child.getFiscalCode());
-    Assert.assertEquals(new Long(11), child.getId());
-    Assert.assertEquals("NAME", child.getName());
-    Assert.assertEquals("SURNAME", child.getSurname());
+    assertEquals(simpleDateFormat().parse("11/11/2011"), child.getBirthDate());
+    assertEquals("ABC123", child.getFiscalCode());
+    assertEquals(new Long(11), child.getId());
+    assertEquals("NAME", child.getName());
+    assertEquals("SURNAME", child.getSurname());
   }
 
   @Test
@@ -74,10 +83,10 @@ public class PersonRepositoryTest {
 
     MapSqlParameterSource map = captor.getValue();
 
-    Assert.assertEquals(simpleDateFormat().parse("11/11/2011"), map.getValue("birthDate"));
-    Assert.assertEquals("ABC123", map.getValue("fiscalCode"));
-    Assert.assertEquals("NAME", map.getValue("name"));
-    Assert.assertEquals("SURNAME", map.getValue("surname"));
+    assertEquals(simpleDateFormat().parse("11/11/2011"), map.getValue("birthDate"));
+    assertEquals("ABC123", map.getValue("fiscalCode"));
+    assertEquals("NAME", map.getValue("name"));
+    assertEquals("SURNAME", map.getValue("surname"));
 
   }
 
@@ -94,10 +103,10 @@ public class PersonRepositoryTest {
 
     verify(jdbcTemplate).queryForList(anyString(), captor.capture(), eq(Long.class));
 
-    Assert.assertEquals(11L, captor.getValue().getValue("childId"));
+    assertEquals(11L, captor.getValue().getValue("childId"));
 
-    Assert.assertEquals(2, result.size());
-    Assert.assertEquals(new Long(16), result.get(1));
+    assertEquals(2, result.size());
+    assertEquals(new Long(16), result.get(1));
   }
 
   @Test
@@ -113,14 +122,14 @@ public class PersonRepositoryTest {
 
     verify(jdbcTemplate).queryForObject(anyString(), captor.capture(), eq(parentRowMapper));
 
-    Assert.assertEquals(15L, captor.getValue().getValue("id"));
+    assertEquals(15L, captor.getValue().getValue("id"));
 
-    Assert.assertEquals(parent.getEmail(), "email@email.email");
-    Assert.assertEquals(parent.getTelephoneNumber(), "132456798");
-    Assert.assertEquals(parent.getFiscalCode(), "CCCAAA55L18A456G");
-    Assert.assertEquals(new Long(15), parent.getId());
-    Assert.assertEquals(parent.getName(), "PARENT_NAME");
-    Assert.assertEquals(parent.getSurname(), "PARENT_SURNAME");
+    assertEquals(parent.getEmail(), "email@email.email");
+    assertEquals(parent.getTelephoneNumber(), "132456798");
+    assertEquals(parent.getFiscalCode(), "CCCAAA55L18A456G");
+    assertEquals(new Long(15), parent.getId());
+    assertEquals(parent.getName(), "PARENT_NAME");
+    assertEquals(parent.getSurname(), "PARENT_SURNAME");
   }
 
   @Test
@@ -136,17 +145,17 @@ public class PersonRepositoryTest {
 
     verify(jdbcTemplate).query(anyString(), captor.capture(), eq(allergyRowMapper));
 
-    Assert.assertEquals(11L, captor.getValue().getValue("childId"));
+    assertEquals(11L, captor.getValue().getValue("childId"));
 
-    Assert.assertEquals(1, allergies.size());
+    assertEquals(1, allergies.size());
 
     Allergy allergy = allergies.get(0);
 
-    Assert.assertEquals(Type.FOOD, allergy.getType());
-    Assert.assertEquals(new Long(11), allergy.getChildId());
-    Assert.assertEquals("DESCRIPTION", allergy.getDescription());
-    Assert.assertEquals(new Long(18), allergy.getId());
-    Assert.assertEquals("ALLERGY_NAME", allergy.getName());
+    assertEquals(Type.FOOD, allergy.getType());
+    assertEquals(new Long(11), allergy.getChildId());
+    assertEquals("DESCRIPTION", allergy.getDescription());
+    assertEquals(new Long(18), allergy.getId());
+    assertEquals("ALLERGY_NAME", allergy.getName());
 
   }
 
@@ -162,16 +171,60 @@ public class PersonRepositoryTest {
 
     verify(jdbcTemplate).query(anyString(), captor.capture(), eq(childRowMapper));
 
-    Assert.assertEquals(2008L, captor.getValue().getValue("year"));
+    assertEquals(2008L, captor.getValue().getValue("year"));
 
-    Assert.assertEquals(1, children.size());
+    assertEquals(1, children.size());
 
     Child child = children.get(0);
-    Assert.assertEquals(simpleDateFormat().parse("11/11/2011"), child.getBirthDate());
-    Assert.assertEquals("ABC123", child.getFiscalCode());
-    Assert.assertEquals(new Long(11), child.getId());
-    Assert.assertEquals("NAME", child.getName());
-    Assert.assertEquals("SURNAME", child.getSurname());
+    assertEquals(simpleDateFormat().parse("11/11/2011"), child.getBirthDate());
+    assertEquals("ABC123", child.getFiscalCode());
+    assertEquals(new Long(11), child.getId());
+    assertEquals("NAME", child.getName());
+    assertEquals("SURNAME", child.getSurname());
+  }
+
+  @Test
+  public void getSubscriptionsByChildAndCampId() {
+    when(jdbcTemplate
+        .query(anyString(), any(MapSqlParameterSource.class), eq(subscriptionRowMapper)))
+        .thenReturn(
+            Collections.singletonList(createSubscription()));
+
+    List<Subscription> subscriptions = personRepository.getSubscriptions(33L, 22L);
+
+    ArgumentCaptor<MapSqlParameterSource> parameterCaptor = ArgumentCaptor
+        .forClass(MapSqlParameterSource.class);
+
+    ArgumentCaptor<String> queryCaptor = ArgumentCaptor.forClass(String.class);
+
+    verify(jdbcTemplate)
+        .query(queryCaptor.capture(), parameterCaptor.capture(), eq(subscriptionRowMapper));
+
+    assertThat(queryCaptor.getValue(), containsString(" AND "));
+
+    assertThat(parameterCaptor.getValue().getValue("campId"), is(33L));
+    assertThat(parameterCaptor.getValue().getValue("childId"), is(22L));
+
+    Subscription subscription = subscriptions.get(0);
+    assertThat(subscription.getId(), is(11L));
+    assertThat(subscription.getChildId(), is(22L));
+    assertThat(subscription.getCampId(), is(33L));
+    assertThat(subscription.getWeekNumber(), is(3));
+    assertThat(subscription.getFirstDay(), is(11));
+    assertThat(subscription.getLastDay(), is(15));
+    assertThat(subscription.getMonth(), is(12));
+  }
+
+  private Subscription createSubscription() {
+    Subscription subscription = new Subscription();
+    subscription.setId(11L);
+    subscription.setChildId(22L);
+    subscription.setCampId(33L);
+    subscription.setWeekNumber(3);
+    subscription.setFirstDay(11);
+    subscription.setLastDay(15);
+    subscription.setMonth(12);
+    return subscription;
   }
 
   private Child createChild() throws ParseException {

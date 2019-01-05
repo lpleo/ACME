@@ -6,6 +6,8 @@ import lombok.Data;
 public class Subscription {
 
   private Long id;
+  private Long childId;
+  private Long campId;
   private Integer month;
   private Integer firstDay;
   private Integer lastDay;

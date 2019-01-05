@@ -4,6 +4,8 @@ import it.lpleo.management.camp.record.child.Allergy;
 import it.lpleo.management.camp.record.child.AllergyRowMapper;
 import it.lpleo.management.camp.record.child.Child;
 import it.lpleo.management.camp.record.child.ChildRowMapper;
+import it.lpleo.management.camp.record.child.Subscription;
+import it.lpleo.management.camp.record.child.SubscriptionRowMapper;
 import it.lpleo.management.camp.record.parent.Parent;
 import it.lpleo.management.camp.record.parent.ParentRowMapper;
 import java.util.List;
@@ -22,6 +24,7 @@ public class PersonRepository {
   private static final String SELECT_SINGLE_PARENT_BY_FISCALCODE = "SELECT * FROM PARENT WHERE FISCALCODE = :fiscalCode";
   private static final String SELECT_PARENT_IDS_FROM_CHILD_ID = "SELECT parentId FROM PARENT_CHILD WHERE childId = :childId";
   private static final String SELECT_ALLERGIES_BY_CHILD_ID = "SELECT * FROM ALLERGY WHERE childId = :childId";
+  private static final String SELECT_SUBSCRIPTION_BY_CHILD_ID = "SELECT * FROM SUBSCRIPTION WHERE childId = :childId";
   private static final String SELECT_CHILDREN_WITH_FILTER = "SELECT CH.* FROM CHILD CH "
       + "LEFT JOIN SUBSCRIPTION SC ON (CH.id = SC.childId) "
       + "LEFT JOIN CAMP CM ON (CM.id = SC.campId) "
@@ -38,6 +41,9 @@ public class PersonRepository {
 
   @Autowired
   private AllergyRowMapper allergyRowMapper;
+
+  @Autowired
+  private SubscriptionRowMapper subscriptionRowMapper;
 
   public Child getChild(Long childId) {
     MapSqlParameterSource parameters = new MapSqlParameterSource();
@@ -103,4 +109,19 @@ public class PersonRepository {
     return jdbcTemplate.query(completeQuery, parameter, childRowMapper);
   }
 
+  public List<Subscription> getSubscriptions(Long campId, Long childId) {
+
+    String completeQuery = SELECT_SUBSCRIPTION_BY_CHILD_ID;
+
+    MapSqlParameterSource parameter = new MapSqlParameterSource();
+    parameter.addValue("childId", childId);
+
+    if (campId != null) {
+      completeQuery += " AND campId = :campId";
+      parameter.addValue("campId", campId);
+    }
+
+    return jdbcTemplate
+        .query(completeQuery, parameter, subscriptionRowMapper);
+  }
 }
