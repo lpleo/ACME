@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonController {
 
   @Autowired
-  PersonService personService;
+  private PersonService personService;
 
   @GetMapping("/children")
   public List<Child> getChildren(@PathVariable(required = false) Long campYear) {
@@ -47,6 +47,13 @@ public class PersonController {
     log.info("insert child");
     return personService.insertChild(child);
   }
+
+  @PostMapping("/parent")
+  public Parent insertParent(@RequestBody Parent parent) {
+    log.info("insert child");
+    return personService.insertParent(parent);
+  }
+
 
   @GetMapping("/parent/{parentId}")
   public Child getParent(@PathVariable Long parentId) {

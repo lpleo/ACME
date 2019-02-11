@@ -91,6 +91,25 @@ public class PersonRepositoryTest {
   }
 
   @Test
+  public void insertParent() throws ParseException {
+
+    personRepository.insertParent(createParent());
+
+    ArgumentCaptor<MapSqlParameterSource> captor = ArgumentCaptor
+        .forClass(MapSqlParameterSource.class);
+
+    verify(jdbcTemplate).update(anyString(), captor.capture());
+
+    MapSqlParameterSource map = captor.getValue();
+
+    assertThat(map.getValue("fiscalCode"), is("CCCAAA55L18A456G"));
+    assertThat(map.getValue("name"), is("PARENT_NAME"));
+    assertThat(map.getValue("surname"), is("PARENT_SURNAME"));
+    assertThat(map.getValue("email"), is("email@email.email"));
+    assertThat(map.getValue("phoneNumber"), is("132456798"));
+  }
+
+  @Test
   public void getParentIdsFromChild() {
     when(jdbcTemplate
         .queryForList(anyString(), any(MapSqlParameterSource.class), eq(Long.class)))

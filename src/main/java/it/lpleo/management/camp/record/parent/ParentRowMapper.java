@@ -15,8 +15,8 @@ public class ParentRowMapper implements RowMapper<Parent> {
     parent.setName(resultSet.getString("name"));
     parent.setSurname(resultSet.getString("surname"));
     parent.setFiscalCode(resultSet.getString("fiscalCode"));
-    parent.setEmail("email");
-    parent.setTelephoneNumber("telephoneNumber");
+    parent.setEmail(resultSet.getString("email"));
+    parent.setTelephoneNumber(resultSet.getString("telephoneNumber"));
     return parent;
   }
 }

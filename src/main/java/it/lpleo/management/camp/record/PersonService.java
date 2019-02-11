@@ -26,6 +26,10 @@ public class PersonService {
     return personRepository.insertChild(child);
   }
 
+  public Parent insertParent(Parent parent) {
+    return personRepository.insertParent(parent);
+  }
+
   public Parent getParent(Long parentId) {
     return personRepository.getParent(parentId);
   }

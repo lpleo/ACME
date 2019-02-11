@@ -20,6 +20,9 @@ public class PersonRepository {
   private static final String SELECT_SINGLE_CHILD = "SELECT * FROM CHILD WHERE id = :id";
   private static final String SELECT_SINGLE_CHILD_BY_FISCALCODE = "SELECT * FROM CHILD WHERE FISCALCODE = :fiscalCode";
   private static final String INSERT_CHILD = "INSERT INTO CHILD(fiscalCode, name, surname, birthDate) values (:fiscalCode,:name,:surname,:birthDate)";
+  private static final String INSERT_PARENT =
+      "INSERT INTO PARENT(fiscalCode, name, surname, email, telephoneNumber) "
+          + "values (:fiscalCode,:name,:surname, :email, :phoneNumber)";
   private static final String SELECT_SINGLE_PARENT = "SELECT * FROM PARENT WHERE id = :id";
   private static final String SELECT_SINGLE_PARENT_BY_FISCALCODE = "SELECT * FROM PARENT WHERE FISCALCODE = :fiscalCode";
   private static final String SELECT_PARENT_IDS_FROM_CHILD_ID = "SELECT parentId FROM PARENT_CHILD WHERE childId = :childId";
@@ -60,13 +63,18 @@ public class PersonRepository {
   }
 
   public Child insertChild(Child child) {
-    MapSqlParameterSource parameters = new MapSqlParameterSource();
-    parameters.addValue("fiscalCode", child.getFiscalCode());
-    parameters.addValue("name", child.getName());
-    parameters.addValue("surname", child.getSurname());
+    MapSqlParameterSource parameters = getSqlParameterSourceFromPreson(child);
     parameters.addValue("birthDate", child.getBirthDate());
     jdbcTemplate.update(INSERT_CHILD, parameters);
     return getChildByFiscalCode(child.getFiscalCode());
+  }
+
+  public Parent insertParent(Parent parent) {
+    MapSqlParameterSource parameters = getSqlParameterSourceFromPreson(parent);
+    parameters.addValue("email", parent.getEmail());
+    parameters.addValue("phoneNumber", parent.getTelephoneNumber());
+    jdbcTemplate.update(INSERT_PARENT, parameters);
+    return getParentByFiscalCode(parent.getFiscalCode());
   }
 
   public List<Long> getParentIdsFromChild(Long childId) {
@@ -124,4 +132,13 @@ public class PersonRepository {
     return jdbcTemplate
         .query(completeQuery, parameter, subscriptionRowMapper);
   }
+
+  private MapSqlParameterSource getSqlParameterSourceFromPreson(Person person) {
+    MapSqlParameterSource parameters = new MapSqlParameterSource();
+    parameters.addValue("fiscalCode", person.getFiscalCode());
+    parameters.addValue("name", person.getName());
+    parameters.addValue("surname", person.getSurname());
+    return parameters;
+  }
+
 }
